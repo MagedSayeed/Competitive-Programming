@@ -23,4 +23,8 @@ struct BIT
         }
         return res;
     }
+    int query(int l, int r)
+    {
+        return query(r) - query(l - 1);
+    }
 };
