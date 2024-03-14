@@ -7,7 +7,7 @@ struct BIT
     }
     void update(int l, int v)
     {
-        while (l <= n)
+        while (l <= tree.size())
         {
             tree[l] += v;
             l += l & -l;
