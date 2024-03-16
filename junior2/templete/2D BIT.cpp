@@ -4,9 +4,9 @@ struct BIT
     BIT(int a, int b) { Tree.assign(a + 1, vector<int>(b + 1, 0)); }
     void update(int x, int y, int v)
     {
-        for (; x <= Tree.size(); x += x & -x)
+        for (; x < Tree.size(); x += x & -x)
         {
-            for (int j = y; j <= Tree.size(); j += j & -j)
+            for (int j = y; j < Tree.size(); j += j & -j)
                 Tree[x][j] += v;
         }
     }
