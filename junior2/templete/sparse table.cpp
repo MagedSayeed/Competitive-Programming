@@ -18,3 +18,11 @@ void build(const vector<int> &arr)
         }
     }
 }
+int query(int l, int r)
+{
+    int len = r - l + 1;
+    len = __lg(len);
+    int v1 = SP[len][l];
+    int v2 = SP[len][r - (1 << len) + 1];
+    return merge(v1, v2);
+}
