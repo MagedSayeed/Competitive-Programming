@@ -10,7 +10,6 @@ struct SegTree {
     sz = n;
     ignoreValue = LLONG_MAX / 2; /// update this
     seg.assign(4 * n, {});
-    lazy.assign(4 * n, {});
   }
 
   int merge(const int &lf, const int &rt) {
