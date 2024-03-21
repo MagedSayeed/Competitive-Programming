@@ -4,7 +4,6 @@ struct SegTree {
 #define md ((lx+rx) >> 1)
   vector<int> seg;
   vector<int> lazy;
-  int ignoreValue;
   int sz;
 
   SegTree(int n) {
