@@ -1,48 +1,56 @@
+struct node /// deh
+{
+    int sum;
+};
 struct SegTree
 {
 #define LF (x * 2 + 1)
 #define RT (x * 2 + 2)
 #define md ((lx + rx) >> 1)
-    struct node /// deh
-    {
-        int sum;
-    };
-
 private:
     vector<node> seg;
-    int sz;
+    int n;
     node ign() /// deh
     {
-        return {};
-    }
-    node mrg(const node &LF, const node &RT) /// deh
-    {
         node res;
-        res.sum = LF.sum + RT.sum;
+        res.sum = 0;
         return res;
     }
-    void build(vector<int> &arr, int x, int l, int r)
+    node single(int x)
     {
-        if (l == r)
+        node res;
+        res.sum = x;
+        return res;
+    }
+    node mrg(const node &L, const node &R) /// deh
+    {
+        node res;
+        res.sum = L.sum + R.sum;
+        return res;
+    }
+    void build(vector<int> &arr, int x, int lx, int rx)
+    {
+        if (lx == rx)
         {
-            seg[x] = arr[l];
+            seg[x] = single(arr[lx]);
+            return;
         }
         build(arr, LF, lx, md);
         build(arr, RT, md + 1, rx);
-        seg[x] = merge(seg[LF], seg[RT]);
+        seg[x] = mrg(seg[LF], seg[RT]);
     }
-    void update(int l, int v, int x, int lx, int rx)
+    void update(int i, int v, int x, int lx, int rx)
     {
-
         if (lx == rx)
         {
-            seg[x] = v;
+            seg[x] = single(v);
+            return;
         }
         if (md >= i)
-            update(l, v, LF, lx, md);
+            update(i, v, LF, lx, md);
         else
-            update(l, v, RT, md + 1, rx);
-        seg[x] = merge(seg[LF], seg[RT]);
+            update(i, v, RT, md + 1, rx);
+        seg[x] = mrg(seg[LF], seg[RT]);
     }
     node query(int l, int r, int x, int lx, int rx)
     {
@@ -52,27 +60,27 @@ private:
         }
         if (r < lx or rx < l)
         {
-            return ign;
+            return ign();
         }
-        return merge(
+        return mrg(
             query(l, r, LF, lx, md),
             query(l, r, RT, md + 1, rx));
     }
-
 public:
-    SegTree(vector<int> &n)
+    SegTree(int n) : n(n) { seg.assign(4 * n, {}); }
+    SegTree(vector<int> &arr)
     {
-        sz = n.size();
-        seg.assign(sz * 4, {});
-        build(arr, 0, 0, sz - 1);
+        n = arr.size();
+        seg.assign(n * 4, {});
+        build(arr, 0, 0, n - 1);
     }
     void update(int i, int v)
     {
-        update(i, v, 0, 0, sz - 1);
+        update(i, v, 0, 0, n - 1);
     }
     node query(int l, int r)
     {
-        return query(l, r, 0, 0, sz - 1);
+        return query(l, r, 0, 0, n - 1);
     }
 #undef LF
 #undef RT
