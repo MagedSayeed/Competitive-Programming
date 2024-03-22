@@ -1,43 +1,80 @@
-struct SegTree {
-#define LF (x*2+1)
-#define RT (x*2+2)
-#define md ((lx+rx) >> 1)
-  vector<int> seg;
-  int ignoreValue;
-  int sz;
+struct SegTree
+{
+#define LF (x * 2 + 1)
+#define RT (x * 2 + 2)
+#define md ((lx + rx) >> 1)
+    struct node /// deh
+    {
+        int sum;
+    };
 
-  SegTree(int n) {
-    sz = n;
-    ignoreValue = LLONG_MAX / 2; /// update this
-    seg.assign(4 * n, {});
-  }
-
-  int merge(const int &lf, const int &rt) {
-    return min(lf, rt); /// update this
-  }
-  void update(int l, int r, int v, int x = 0, int lx = 0, int rx = -1) {
-    if (r < lx or rx < l) {
-      return;
+private:
+    vector<node> seg;
+    int sz;
+    node ign() /// deh
+    {
+        return {};
     }
-    update(l, r, v, LF, lx, md);
-    update(l, r, v, RT, md + 1, rx);
-    seg[x] = merge(seg[LF], seg[RT]);
-  }
-
-  int query(int l, int r, int x = 0, int lx = 0, int rx = -1) {
-    if (l <= lx and rx <= r) {
-      return seg[x];
+    node mrg(const node &LF, const node &RT) /// deh
+    {
+        node res;
+        res.sum = LF.sum + RT.sum;
+        return res;
     }
-    if (r < lx or rx < l) {
-      return ignoreValue;
+    void build(vector<int> &arr, int x, int l, int r)
+    {
+        if (l == r)
+        {
+            seg[x] = arr[l];
+        }
+        build(arr, LF, lx, md);
+        build(arr, RT, md + 1, rx);
+        seg[x] = merge(seg[LF], seg[RT]);
     }
-    return merge(
-        query(l, r, LF, lx, md),
-        query(l, r, RT, md + 1, rx)
-    );
-  }
+    void update(int l, int v, int x, int lx, int rx)
+    {
 
-#undef md
+        if (lx == rx)
+        {
+            seg[x] = v;
+        }
+        if (md >= i)
+            update(l, v, LF, lx, md);
+        else
+            update(l, v, RT, md + 1, rx);
+        seg[x] = merge(seg[LF], seg[RT]);
+    }
+    node query(int l, int r, int x, int lx, int rx)
+    {
+        if (l <= lx and rx <= r)
+        {
+            return seg[x];
+        }
+        if (r < lx or rx < l)
+        {
+            return ign;
+        }
+        return merge(
+            query(l, r, LF, lx, md),
+            query(l, r, RT, md + 1, rx));
+    }
+
+public:
+    SegTree(vector<int> &n)
+    {
+        sz = n.size();
+        seg.assign(sz * 4, {});
+        build(arr, 0, 0, sz - 1);
+    }
+    void update(int i, int v)
+    {
+        update(i, v, 0, 0, sz - 1);
+    }
+    node query(int l, int r)
+    {
+        return query(l, r, 0, 0, sz - 1);
+    }
 #undef LF
 #undef RT
+#undef md
 };
