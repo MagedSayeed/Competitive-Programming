@@ -14,3 +14,10 @@ using namespace __gnu_pbds;
  
 using namespace __gnu_pbds;
 #define ordered_multiset tree<long long, null_type,less_equal<long long>, rb_tree_tag,tree_order_statistics_node_update>
+
+//ordered_set -> b5aly feha dup 3ady 
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+using namespace __gnu_pbds;
+#define ordered_set tree<pair<int,int>, null_type,less<int>,  rb_tree_tag,tree_order_statistics_node_update>
