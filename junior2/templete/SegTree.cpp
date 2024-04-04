@@ -16,7 +16,7 @@ private:
         res.sum = 0;
         return res;
     }
-    node single(int x)
+    node single(int x) ///deh
     {
         node res;
         res.sum = x;
