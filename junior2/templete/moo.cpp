@@ -1,12 +1,13 @@
+int cur=0;
 struct query
 {
     int l, r, id;
 };
-void add(int x)
+void add(int idx)
 {
    
 }
-void remove(int x)
+void remove(int idx)
 {
    
 }
