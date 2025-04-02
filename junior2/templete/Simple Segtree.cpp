@@ -27,7 +27,7 @@ struct SegTree
 
         int md = lx + rx >> 1;
 
-        if (idx >= md)
+        if (idx > md)
             update(idx, val, x * 2 + 2, md + 1, rx);
         else
             update(idx, val, x * 2 + 1, lx, md);
