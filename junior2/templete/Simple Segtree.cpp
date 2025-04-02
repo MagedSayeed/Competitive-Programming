@@ -20,7 +20,10 @@ struct SegTree
     void update(int idx, int val, int x, int lx, int rx)
     {
         if (lx == rx)
+        {
             tree[x] = val;
+            return ;
+        }
 
         int md = lx + rx >> 1;
 
