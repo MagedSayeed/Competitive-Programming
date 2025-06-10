@@ -1,11 +1,21 @@
-typedef double T;
-typedef complex<T> pt;
-#define x real()
-#define y imag()
-#define PI acos(-1.0)
-arg(Point) // return an angle [-PI,PI]
-T dot(pt v, pt w) {return (conj(v)*w).x;} //how similar their directions are : returns 0 if to vectors are perpendiculer
-double angle(pt v, pt w) {return acos(clamp(dot(v,w) / abs(v) / abs(w), -1.0, 1.0));} // returns angle between two vectors
-T cross(pt v, pt w) {return (conj(v)*w).y;} //measure of how perpendicular they are : returns 0 if they are aligned
-T orient(pt a, pt b, pt c) {return cross(b-a,c-a);}  // determining the relative position of points and other objects (Pos=L,eq=align,neg=R)
-
+ld PI = acosl(-1);
+typedef ll T;
+typedef complex<T> point;
+#define X real()
+#define Y imag()
+#define vec(a,b) ((b)-(a))
+#define polar(r,t) ((r)*exp(point(0,(t))))
+#define length(v) ((long double)hypot((v).X,(v).Y))
+#define angle(v) (atan2((v).Y,(v).X))
+#define angle2(a,c) fabs(remainder(angle(a)-angle(c),PI*2))
+#define angle3(a,b,c) fabs(remainder(angle((a)-(b))-angle((c)-(b)),PI*2))
+#define cross(a,b) ((conj(a)*(b)).Y)
+#define dot(a,b) ((conj(a)*(b)).X)
+#define lengthSqr(v) (dot(v,v))
+#define rotate(v,t) (polar(v,t))
+#define rotateabout(v,t,a) (rotate(vec(a,v),t)+(a))
+#define reflect(p,m) (conj((p)/(m))*(m))
+#define normalize(p) ((p)/length(p))
+#define same(a,b) (lengthSqr(vec(a,b))<EPS)
+#define mid(a,b) (((a)+(b))/point(2,0))
+#define perp(v) (point(-(v).Y,(v).X))
