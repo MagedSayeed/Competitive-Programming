@@ -1,5 +1,5 @@
-ld PI = acosl(-1);
-typedef ll T;
+long double PI = acosl(-1);
+typedef double T;
 typedef complex<T> point;
 #define X real()
 #define Y imag()
