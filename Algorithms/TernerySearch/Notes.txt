@@ -1,0 +1,7 @@
+There are two Versions(cases):
+The function strictly increases first, reaches a maximum and then strictly decreases.
+The function strictly decreases first, reaches a minimum, and then strictly increases.
+Notes: 
+think (ok(md1) < ok(md2)) or (ok(md1) <= ok(md2)) or it doesn't matter
+Change the underlined lines(five in total) and the ok function
+To swap between versions simply swap the code inside the two conditions

@@ -1,0 +1,1 @@
+all these sub-problems can solve in OR , AND , GCD
