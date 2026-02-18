@@ -1,0 +1,45 @@
+if you have to numbers x , y 
+note that : 
+==> gcd(x+a , y+a) = max(x, y )- min(x,y)
+==> assume x<y ==> gcd(x,y)=gcd(x,y−x)
+ 
+Given numbers x and y where x < y:
+
+gcd(x + a, y + a) = y - x
+gcd(x, y) = gcd(x, y - x)
+Key Observations
+Adding the same value (a) to both numbers preserves their difference
+gcd(n, n+k) = gcd(n, k) for any integer k
+gcd(a, b) = gcd(b, a) (commutative property)
+gcd(a, 0) = |a|
+gcd(a, b) = gcd(a, b mod a) (Euclidean algorithm variant)
+Fundamental Equations
+// Basic properties
+1. gcd(a, b) = gcd(b, a)
+2. gcd(a, b) = gcd(-a, b)
+3. gcd(a, b) = gcd(|a|, |b|)
+
+// Important relationships
+4. gcd(ka, kb) = k·gcd(a, b) ∀ k ∈ ℤ⁺
+5. If d|a and d|b, then d|(ax + by) ∀ x,y ∈ ℤ
+6. gcd(a, b) = gcd(a, b - a) (Subtraction property)
+Example Analysis
+Given x=12, y=28:
+y - x = 16
+Required: gcd(12+a, 28+a) = 16
+
+Solution equation:
+12 + a ≡ 0 mod 16 → a ≡ 4 mod 16
+Minimum positive a = 4
+Verification: gcd(16, 32) = 16
+Important Note:
+The equation gcd(x+a, y+a) = y-x implies:
+(x+a) and (y+a) must both be multiples of (y-x)
+→ x+a = k(y-x) for some integer k ≥ 1
+General Solution Formula
+a = k(y-x) - x
+Where k ∈ ℕ and k > x/(y-x)
+
+
+
+if a*k + b*k2 = 1 then gcd(a , b)=1

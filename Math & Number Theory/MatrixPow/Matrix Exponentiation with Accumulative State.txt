@@ -1,0 +1,49 @@
+📌 Matrix Exponentiation with Accumulative State
+-----------------------------------------------
+
+Use when:
+- You're counting the total number of ways to do something in ≤ n steps
+- The recurrence is linear and fits matrix power
+- You need prefix sums like: sum(dp[i]) from i = 1 to n
+
+🔥 Trick:
+- Add an extra variable to the state vector to accumulate results
+- Model the accumulator in the transition matrix
+- Use matrix power of (n + 1), since acc[i+1] = acc[i] + current_value
+
+🧠 Key Concepts:
+- Let dp[node][step] = number of ways to reach `node` in `step` moves
+- Build initial state vector (example: [1, 0, 0, 0])
+- Derive recurrence for each node (based on allowed transitions)
+- Add accumulator: state = [a, b, c, d, acc]
+- Update acc with: acc' = acc + a   (or whatever you're summing)
+
+🧮 Example (Complete Graph of 4 Nodes):
+  Nodes: 0, 1, 2, 3
+
+  Transitions:
+    a' = b + c + d
+    b' = a + c + d
+    c' = a + b + d
+    d' = a + b + c
+    acc' = acc + a
+
+  Initial state: [1, 0, 0, 0, 0]  // start at node 0
+  Final answer = acc - 1         // subtract length-0 trivial path
+
+🚀 Steps:
+1. Think in terms of dp[node][steps]
+2. Write recurrence and verify with small values
+3. Add accumulator to state vector
+4. Build transition matrix T (include how acc depends on dp)
+5. Do matrix exponentiation: final_state = init_state * (T ^ (n+1))
+6. Answer = final_state[acc_index] - initial_value
+
+🧪 Sample:
+  Input: n = 4
+  Output: 30
+  Meaning: 30 paths of length 1 to 4 that start and end at node 0
+
+💡 Reminder:
+- Use (n + 1) in power to include the final step update in accumulator
+- Always subtract the initial value if problem asks "from step 1 to n"

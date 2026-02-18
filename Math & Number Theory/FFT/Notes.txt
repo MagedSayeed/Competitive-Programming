@@ -1,0 +1,17 @@
+when you write fft to count something make sure you want the count actully or you just need to check if this value appered in final answer or not ?
+if you don't care of count make sure to minmize the answer in fft function in last loop with min 
+to be like that :
+
+    for (int i = 0; i < n; i++)
+        result[i] = round(fa[i].real());
+    
+    for(auto &i : result)i=min(i , 1ll);
+==========================================================================================
+
+when you have a mod and want to try to solve it with ntt make this steops :
+    take this mod as example : 132120577
+    and subtract 1 from it 
+    divide it over two to reach => c*(1<<x) 
+    now we can represent mod as = c*(1<<x) +1;
+     132120577 = 63*(1<<21)+1
+    and if (1<<x) >= maxNumber in your poly now you can use ntt and use the generator() to find the Primitive root for this mod

@@ -1,0 +1,55 @@
+
+📌 Matrix Exponentiation for Recurrence with Polynomial Term (i+1)^k
+
+✅ Goal:
+Compute values of the form:
+    dp[i+1] = dp[i] + (i+1)^k
+
+This leads to:
+    dp[n] = ∑_{i=0}^{n-1} (i+1)^k = ∑_{i=1}^{n} i^k
+Or equivalently:
+    ∑_{i=0}^{n} i^k = dp[n+1], where dp[0] = 0
+
+🧠 Idea:
+Use matrix exponentiation to compute dp[n+1] efficiently in O(k^3 log n) time.
+
+🏗️ State Vector:
+Let the state vector be of size (k + 2):
+    State[i] = [dp[i], i^0, i^1, ..., i^k]
+
+🧱 Transition Matrix (size (k+2) x (k+2)):
+We build a square matrix M such that:
+    State[i+1] = M × State[i]
+
+Structure:
+- Row 0: computes dp[i+1] = dp[i] + i^k
+    → Row[0][0] = 1 (carry dp[i])
+    → Row[0][k+1] = 1 (add i^k)
+- Rows 1 to k+1: compute powers using binomial expansion of (i+1)^j
+    → Row[r] = binomial coefficients of (i+1)^{r-1}
+
+🧪 Example: dp[i+1] = dp[i] + (i+1)^2
+This computes: dp[n+1] = ∑_{i=0}^n (i+1)^2 = ∑_{i=1}^{n+1} i^2
+
+Use 4x4 matrix (k = 2):
+
+State Vector:
+    State[i] = [dp[i], i^0, i^1, i^2]
+
+Transition Matrix M:
+    [ 1  0  0  1 ]   ← dp[i+1] = dp[i] + i^2
+    [ 0  1  0  0 ]   ← i^0 stays 1
+    [ 0  1  1  0 ]   ← i^1 = i + 1
+    [ 0  1  2  1 ]   ← i^2 = i^2 + 2i + 1
+
+Initial Vector:
+    dp[0] = 0, i = 0 ⇒ [0, 1, 0, 0]
+
+To compute:
+    ∑_{i=0}^{n} i^2 = dp[n+1]
+
+📌 Final Summary:
+- Matrix size = k + 2
+- State vector = [dp[i], i^0, i^1, ..., i^k]
+- Use binomial expansion for polynomial update
+- Result is in State[n+1][0]

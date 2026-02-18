@@ -1,0 +1,90 @@
+📌 Matrix Exponentiation Tricks with Explanations
+==================================================
+
+✅ 1. Fast Queries Optimization
+------------------------------
+
+🔍 When:
+- You have multiple queries, each asking for result at step `n`
+- Naive time is too slow: Q × (m³ × log n)
+
+⚙️ What to do:
+- Precompute powers of the transition matrix:
+  T^1, T^2, T^4, T^8, ..., T^(2^k)  for largest k with 2^k ≤ max(n)
+- Store them in a vector `powers[i] = T^(2^i)`
+
+💡 Trick:
+- To compute T^n, use binary decomposition of `n`
+  For each set bit i in `n`, multiply result by T^(2^i)
+  Complexity becomes Q × (m² × log n)
+
+- Each query becomes:
+  result = state × T^n
+  Done with O(log n) matrix multiplications of (1×m) × (m×m)
+
+🧠 Summary:
+- Time per query: O(m² × log n)
+- Preprocessing: O(m³ × log(max_n))
+
+
+✅ 2. Prefix Sum in State (Accumulative Sum)
+-------------------------------------------
+
+🔍 When:
+- You want to count total ways from steps 1 to n (not just step n)
+- You want sum(dp[x]) for x = 1 to n efficiently
+
+⚙️ What to do:
+- Add an extra variable to your state to accumulate desired value
+- Example: acc[i+1] = acc[i] + dp[i][target_node]
+
+💡 Trick:
+- Use power(n + 1) to include contribution from step `n`
+- Subtract initial value if needed (e.g., to exclude step 0)
+
+🧠 Example:
+  state = [a, b, c, d, acc]
+  acc' = acc + a
+
+- Final result = state[0][acc_index] - initial_value
+
+
+✅ 3. Handling a Changing Index (Shifting / Add `i` Term)
+---------------------------------------------------------
+
+🔍 When:
+- Your recurrence includes the index i itself (e.g. fib[i] = fib[i-1] + fib[i-2] + i)
+
+⚙️ What to do:
+- Add a shifting variable in state to track `i`
+- Example state = [fib[i-1], fib[i], i, 1]
+
+💡 Trick:
+- Include `i` as part of the state
+- Add a constant 1 at the end so you can increase `i` by 1 in each step
+- Use the matrix to implement: i' = i + 1
+
+🧠 Matrix example:
+  [fib[i-1], fib[i], i, 1] × T → [fib[i], fib[i+1], i+1, 1]
+
+- This lets you compute fib[i] where `i` appears in the recurrence
+
+
+✅ 4. Handling a Constant Additive Term (e.g., +C)
+--------------------------------------------------
+
+🔍 When:
+- Recurrence includes a constant C, like: fib[i] = fib[i-1] + fib[i-2] + C
+
+⚙️ What to do:
+- Add a constant `1` to the state so you can use it to contribute +C on each step
+
+💡 Trick:
+- Add a trailing `1` in the state
+- Use matrix to implement: fib[i+1] = fib[i] + fib[i-1] + C × 1
+
+🧠 Example:
+  state = [fib[i-1], fib[i], 1]
+  T[?, 2] = C   // contributes constant C via the trailing 1
+
+add 1 in state and C in transiciton that help you if you have another variables like i 
